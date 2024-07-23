@@ -1,70 +1,88 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, TextInput, Button } from 'react-native';
 
 export default function HomeScreen() {
+  const [purchasePrice, setPurchasePrice] = useState('');
+  const [salePrice, setSalePrice] = useState('');
+  const [invest, setInvest] = useState('');
+  const [profit, setProfit] = useState<number | null>(null);
+
+  const calculateProfit = () => {
+    const purchase = parseFloat(purchasePrice);
+    const sale = parseFloat(salePrice);
+    const inv = parseFloat(invest);
+
+    if (!isNaN(purchase) && !isNaN(sale) && !isNaN(inv) && purchase > 0) {
+      const result = (sale - purchase) * (inv / purchase);
+      setProfit(result);
+    } else {
+      setProfit(null);
+    }
+  };
+
+  const clearInputs = () => {
+    setPurchasePrice('');
+    setSalePrice('');
+    setInvest('');
+    setProfit(null);
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View style={styles.container}>
+      <Text style={styles.label}>Preço de Compra:</Text>
+      <TextInput
+        style={styles.input}
+        keyboardType="numeric"
+        value={purchasePrice}
+        onChangeText={setPurchasePrice}
+      />
+      <Text style={styles.label}>Preço de Venda:</Text>
+      <TextInput
+        style={styles.input}
+        keyboardType="numeric"
+        value={salePrice}
+        onChangeText={setSalePrice}
+      />
+      <Text style={styles.label}>Valor Investido:</Text>
+      <TextInput
+        style={styles.input}
+        keyboardType="numeric"
+        value={invest}
+        onChangeText={setInvest}
+      />
+      <Button title="Calcular Lucro" onPress={calculateProfit} />
+      <Button title="Limpar" onPress={clearInputs} color="#ff4d47" />
+      {profit !== null && (
+        <Text style={styles.result}>Lucro Potencial: €{profit.toFixed(2)}</Text>
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+
+
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  label: {
+    fontSize: 18,
+    marginVertical: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 10,
+    fontSize: 16,
+    marginVertical: 8,
+    borderRadius: 80, // Corrigido para borderRadius
+  },
+  result: {
+    fontSize: 18,
+    marginVertical: 20,
+    color: '#8b2e44',
   },
 });
