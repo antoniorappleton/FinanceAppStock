@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   clearButton: {
-    backgroundColor: '#FF6347',
+    backgroundColor: '#ff4747',
     borderRadius: 10,
     padding: 10,
     marginVertical: 8,
