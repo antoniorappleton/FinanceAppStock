@@ -31,6 +31,21 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "05b73396-0afd-46ff-9413-cdb6a540bb96"
+      }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/05b73396-0afd-46ff-9413-cdb6a540bb96"
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "owner": "antonioappleton"
   }
 }
