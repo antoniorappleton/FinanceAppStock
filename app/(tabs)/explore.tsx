@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, Button, Alert, TouchableOpacity, Platform } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Alert, TouchableOpacity, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function TabTwoScreen() {
@@ -69,6 +69,7 @@ export default function TabTwoScreen() {
         <TouchableOpacity onPress={() => setShowDatePicker(true)}>
           <Text style={styles.dateText}>{birthDate.toDateString()}</Text>
         </TouchableOpacity>
+        
         {showDatePicker && (
           <DateTimePicker
             value={birthDate}
@@ -77,9 +78,24 @@ export default function TabTwoScreen() {
             onChange={onDateChange}
           />
         )}
-        <Button title="Save" onPress={handleSave} color="#1E90FF" />
-        <Button title="Clear" onPress={handleClear} color="#ff5f47" />
-        <Button title="Login" onPress={handleLogin} color="#32CD32" />
+        
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.buttonSave} onPress={handleSave}>
+            <Text style={styles.buttonText}>Save</Text>
+          </TouchableOpacity>
+        </View>
+       
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.buttonClear} onPress={handleClear}>
+            <Text style={styles.buttonText}>Clear</Text>
+          </TouchableOpacity>
+        </View>
+        
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.buttonLogin} onPress={handleLogin}>
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -118,5 +134,30 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     borderRadius: 5,
     textAlign: 'center',
+  },
+  buttonContainer: {
+    marginVertical: 10, // Espaço entre os botões
+  },
+  buttonSave: {
+    backgroundColor: '#1eb0ff',
+    padding: 15,
+    borderRadius: 50,
+    alignItems: 'center',
+  },
+  buttonLogin: {
+    backgroundColor: '#1eff56',
+    padding: 15,
+    borderRadius: 50,
+    alignItems: 'center',
+  },
+  buttonClear: {
+    backgroundColor: '#ff1e40',
+    padding: 15,
+    borderRadius: 50,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });
